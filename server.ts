@@ -1,5 +1,5 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
-import { getAllRooms, createRooms, getRoom } from './routes.ts'
+import { getAllRooms, createRooms, getRoom, updateRoom  } from './routes.ts'
 
 const app = new Application();
 
@@ -16,6 +16,7 @@ router.get('/', (ctx) => {
     .get('/rooms', getAllRooms)
     .get('/rooms/:id', getRoom)
     .post('/rooms', createRooms)
+    .put('/rooms/:id', updateRoom)
 
 
 app.use(router.routes());

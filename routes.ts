@@ -9,12 +9,12 @@ const getAllRooms = async (ctx: RouterContext) => {
 }
 
 const createRooms = async (ctx: RouterContext) => {
-    const { room_number, size, price, isAvalable } = await ctx.request.body().value;
+    const { room_number, size, price, isAvailable } = await ctx.request.body().value;
     const room: any = {
         room_number,
         size,
         price,
-        isAvalable
+        isAvailable
     }
     const id = await roomsCollection.insertOne(room)
 
@@ -24,7 +24,7 @@ const createRooms = async (ctx: RouterContext) => {
 
 }
 const getRoom = async (ctx: RouterContext) => {
-    
+
     // get the id of the document from the params object
     const id = ctx.params.id
     const room = await roomsCollection.findOne({ _id: { $oid: id } })
@@ -32,5 +32,25 @@ const getRoom = async (ctx: RouterContext) => {
 
 }
 
+const updateRoom = async (ctx: RouterContext) => {
+    // get the id of the document from the params object
+    const id = ctx.params.id
+    const { room_number, size, price, isAvailable } = await ctx.request.body().value;
 
-export { getAllRooms, createRooms, getRoom }
+    const { modifiedCount } = await roomsCollection.updateOne({ _id: { $oid: id } }, {
+        $set: {
+            price,
+            isAvailable
+        }
+    })
+    // iIf the id does not exist in collection, we return a 404 status and send a custom message
+    if (!modifiedCount) {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Room not found' }
+        return;
+    }
+    ctx.response.body = await roomsCollection.findOne({ _id: { $oid: id } })
+}
+
+
+export { getAllRooms, createRooms, getRoom, updateRoom }
