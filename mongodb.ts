@@ -12,5 +12,5 @@ const db = client.database('denoOakApi')
 export default db;
 
 // Command 
-// deno run --allow-net --allow-read --allow-write --unstable server.ts
+// deno run --allow-net --allow-plugin --allow-read --allow-write --unstable server.ts
 
