@@ -52,5 +52,18 @@ const updateRoom = async (ctx: RouterContext) => {
     ctx.response.body = await roomsCollection.findOne({ _id: { $oid: id } })
 }
 
+const deleteRoom = async (ctx: RouterContext) => {
+    console.log(ctx.params.id);
+    
+    const id = ctx.params.id
+    const room = await roomsCollection.deleteOne({ _id: { $oid: id } });
+    if (!room) {
+        ctx.response.status = 404;
+        ctx.response.body = { message: 'Room not found' }
+        return;
+    }
+    ctx.response.status = 204;
+}
 
-export { getAllRooms, createRooms, getRoom, updateRoom }
+
+export { getAllRooms, createRooms, getRoom, updateRoom, deleteRoom }
