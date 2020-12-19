@@ -1,5 +1,5 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
-import { getAllRooms, createRooms } from './routes.ts'
+import { getAllRooms, createRooms, getRoom } from './routes.ts'
 
 const app = new Application();
 
@@ -14,6 +14,7 @@ router.get('/', (ctx) => {
     ctx.response.body = 'Hello from Deno'
 })
     .get('/rooms', getAllRooms)
+    .get('/rooms/:id', getRoom)
     .post('/rooms', createRooms)
 
 

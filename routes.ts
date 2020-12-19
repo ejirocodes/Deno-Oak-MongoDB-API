@@ -17,13 +17,20 @@ const createRooms = async (ctx: RouterContext) => {
         isAvalable
     }
     const id = await roomsCollection.insertOne(room)
-    console.log(id);
 
     room._id = id;
     ctx.response.status = 201
     ctx.response.body = room
 
 }
+const getRoom = async (ctx: RouterContext) => {
+    
+    // get the id of the document from the params object
+    const id = ctx.params.id
+    const room = await roomsCollection.findOne({ _id: { $oid: id } })
+    ctx.response.body = room
+
+}
 
 
-export { getAllRooms, createRooms }
+export { getAllRooms, createRooms, getRoom }
