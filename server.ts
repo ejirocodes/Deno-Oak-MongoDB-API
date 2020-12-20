@@ -6,9 +6,6 @@ const app = new Application();
 const router = new Router(); 
 
 const port: number = 8000;
-// app.use(ctx => {
-//     ctx.response.body = 'Hello Deno'
-// })
 
 router.get('/', (ctx) => {
     ctx.response.body = 'Hello from Deno'
